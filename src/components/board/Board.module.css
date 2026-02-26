@@ -1,0 +1,11 @@
+.board {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 20px;
+  overflow-x: auto;
+  min-height: calc(100vh - 56px);
+  scrollbar-width: thin;
+  scrollbar-color: #e2e8f0 transparent;
+}
