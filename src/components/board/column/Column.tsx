@@ -20,16 +20,12 @@ export const Column = memo(function Column({ id, title, index, total }: Props) {
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState(title);
 
-  const abortEditing = () => {
-    setTitleDraft(title);
-    setEditingTitle(false);
-  };
-
   const commitTitle = () => {
     const t = titleDraft.trim();
     if (t && t !== title) {
       updateBoardHandler((prev) => renameColumn(id, t, prev));
-    } else abortEditing();
+    }
+    setEditingTitle(false);
   };
 
   const confirmDelete = () => {
@@ -42,7 +38,9 @@ export const Column = memo(function Column({ id, title, index, total }: Props) {
   };
 
   const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") commitTitle();
+    if (e.key === "Enter") {
+      e.currentTarget.blur();
+    }
     if (e.key === "Escape") {
       setTitleDraft(title);
       setEditingTitle(false);
@@ -54,11 +52,12 @@ export const Column = memo(function Column({ id, title, index, total }: Props) {
       <div className={styles.header}>
         {editingTitle ? (
           <input
-            className={styles.titleInput}
+            autoFocus
             value={titleDraft}
-            onChange={(e) => setTitleDraft(e.target.value)}
             onBlur={commitTitle}
             onKeyDown={onKeyDownHandler}
+            className={styles.titleInput}
+            onChange={(e) => setTitleDraft(e.target.value)}
           />
         ) : (
           <h2

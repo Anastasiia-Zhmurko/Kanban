@@ -28,6 +28,17 @@
   user-select: none;
 }
 
+.titleInput {
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid #3b82f6;
+  border-radius: 5px;
+  padding: 3px 7px;
+  outline: none;
+  font-family: inherit;
+  width: 100%;
+}
+
 .iconBtn {
   background: none;
   border: none;
