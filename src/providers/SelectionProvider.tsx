@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 interface SelectionContext {

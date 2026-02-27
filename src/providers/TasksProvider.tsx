@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import type { TasksRecord } from "../types";
 import { uid } from "../utils/helpers";
 import { COLUMN_DEFAULT_ID } from "./BoardProvider";

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import type { FilterStatus } from "../types";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 

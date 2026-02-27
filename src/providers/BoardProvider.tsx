@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import type { Column } from "../types";
 import { uid } from "../utils/helpers";
 import { useLocalStorage } from "../hooks/useLocalStorage";

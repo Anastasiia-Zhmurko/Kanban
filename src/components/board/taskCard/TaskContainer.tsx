@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo } from "react";
+import React, { memo, useCallback } from "react";
 import styles from "./TaskCard.module.css";
 import { useSelectionContext } from "../../../providers/SelectionProvider";
 import { useTasksContext } from "../../../providers/TasksProvider";
@@ -23,13 +23,11 @@ export const TaskContainer = memo(function TaskContainer({ colId }: Props) {
   const { tasks, updateTasksHandler } = useTasksContext();
   const { addTask } = useTasksController();
 
-  console.log(tasks, "--tasks");
-
   const onSubmitTask = useCallback(
     (t: string) => {
       updateTasksHandler((prev) => addTask(t, colId, prev));
     },
-    [updateTasksHandler],
+    [updateTasksHandler, addTask, colId],
   );
 
   const columnTasks = tasks[colId] ?? [];
@@ -40,25 +38,20 @@ export const TaskContainer = memo(function TaskContainer({ colId }: Props) {
     filterStatus,
   });
 
-  const tasksByColId = useMemo(() => {
-    return {
-      tasks: filteredTasks,
-      ids: filteredTasks.map((item) => item?.id) || [],
-    };
-  }, [filteredTasks]);
-
+  console.log(filteredTasks, "-filteredTasks");
   const allSelected =
-    tasksByColId.tasks.length > 0 &&
-    tasksByColId.tasks.every((t) => isSelected(t.id, selectedIds));
+    filteredTasks.length > 0 &&
+    filteredTasks.every((t) => isSelected(t.id, selectedIds));
 
-  const allSelectHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    selecthHandler((prev) =>
-      e.target.checked
-        ? select(tasksByColId.ids, prev)
-        : deselect(tasksByColId.ids, prev),
-    );
-  };
-
+  const allSelectHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const ids = filteredTasks.map((t) => t.id);
+      selecthHandler((prev) =>
+        e.target.checked ? select(ids, prev) : deselect(ids, prev),
+      );
+    },
+    [filteredTasks, selecthHandler, select, deselect],
+  );
   return (
     <>
       <label className={styles.selectAll}>
@@ -67,10 +60,10 @@ export const TaskContainer = memo(function TaskContainer({ colId }: Props) {
           checked={allSelected}
           onChange={allSelectHandler}
         />
-        <span>Select all ({tasksByColId.tasks.length})</span>
+        <span>Select all ({filteredTasks.length})</span>
       </label>
 
-      <TaskList tasks={tasksByColId.tasks} colId={colId} />
+      <TaskList tasks={filteredTasks} colId={colId} />
       <AddNewTask submitTask={onSubmitTask} />
     </>
   );

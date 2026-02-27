@@ -13,7 +13,9 @@ export function useLocalStorage<T>(key: string, initial: T) {
   useEffect(() => {
     try {
       localStorage.setItem(key, JSON.stringify(value));
-    } catch {}
+    } catch {
+      throw new Error("Invalid data type for localstorage");
+    }
   }, [key, value]);
 
   return [value, setValue] as const;
