@@ -2,6 +2,10 @@
 
 A responsive Kanban board built with **React + TypeScript + Vite**.
 
+## Demo
+
+https://kanbanboad.vercel.app/
+
 ## Features
 
 - **Columns** — add, delete, rename, reorder (← →)
